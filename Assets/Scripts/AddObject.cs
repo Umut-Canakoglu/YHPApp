@@ -17,6 +17,7 @@ public class AddObject : MonoBehaviour
     public Vector3 mousePos;
 
     public void ActivatePlanetSet()
+    //Open setting screen where you can determine the variables of a new object
     {
         setScreenPlanet.SetActive(true);
         setScreenStar.SetActive(false);
@@ -30,6 +31,7 @@ public class AddObject : MonoBehaviour
 
     public void SetPlanet()
     {
+        //Create a new instance of the classes
         GameObject planetInst = Instantiate(planet, mousePos, transform.rotation);
         planetInst.GetComponent<PlanetMovement>().massPlanet = mass;
         planetInst.GetComponent<PlanetMovement>().radiusPlanet = radius;
@@ -50,6 +52,7 @@ public class AddObject : MonoBehaviour
     }
 
     public void SetMass(string s)
+    //Taking inputs from fields
     {
         mass = float.Parse(s);
     }
@@ -71,6 +74,7 @@ public class AddObject : MonoBehaviour
 
     public void CloseScreen()
     {
+        //Closing all placement screens after the player thinks they are finished
         selectionScreen.SetActive(false);
         setScreenPlanet.SetActive(false);
         setScreenStar.SetActive(false);

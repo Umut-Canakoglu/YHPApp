@@ -20,7 +20,7 @@ public class MoveCamera : MonoBehaviour
 
     void Start()
     {
-        camera = GetComponent<Camera>();
+        camera = GetComponent<Camera>();//This is a class in UnityEngine library that is used for cameras
         transform = GetComponent<Transform>();
         selected = false;
         looking = false;
@@ -39,7 +39,7 @@ public class MoveCamera : MonoBehaviour
             if (looking)
             {
                 Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
+                Cursor.lockState = CursorLockMode.None;//This makes the cursor locked to the center
                 looking = false;
             } else {
                 Cursor.visible = false;
@@ -48,7 +48,7 @@ public class MoveCamera : MonoBehaviour
             }
         }
 
-        if (looking)
+        if (looking) //Any movement made by the mouse rotates the camera to simulate looking around
         {
             float rotationX = Input.GetAxisRaw("Mouse X");
             float rotationY = Input.GetAxisRaw("Mouse Y");
@@ -68,6 +68,7 @@ public class MoveCamera : MonoBehaviour
             {
                 Vector3 difference = mousePosition - Input.mousePosition;
                 if (difference.magnitude > 0.5f && selected)
+                //If the change in the movement of the mouse is greater than a threshold the item is dragged around
                 {
                     isDragging = true;
                 }
@@ -122,6 +123,7 @@ public class MoveCamera : MonoBehaviour
                 } else {
                     Ray ray = camera.ScreenPointToRay(Input.mousePosition);
                     Plane plane = new Plane(Vector3.up, selectedObject.transform.position);
+                    //If an object is dragged around the new position is calculated by projecting the mouse's position onto a plane at the same level as the object
                     if (plane.Raycast(ray, out float distance))
                     {
                         Vector3 point = ray.GetPoint(distance);
@@ -144,8 +146,11 @@ public class MoveCamera : MonoBehaviour
         float tempView = camera.orthographicSize;
         float zoomAmount = zoom * scrollSpeed;
         camera.orthographicSize = tempView + zoomAmount;
+        //To zoom in and out by changing the size of the area the camera is looking at
+        //Since this is an orthographic camera the size of the area makes items look closer
 
         if (Input.GetMouseButtonDown(1))
+        //Using right-click to place a new object
         {
             placeObject.SetActive(true);
             Ray ray = camera.ScreenPointToRay(Input.mousePosition);

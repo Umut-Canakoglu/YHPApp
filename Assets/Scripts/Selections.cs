@@ -9,24 +9,15 @@ public class Selections : MonoBehaviour
     public TextMeshProUGUI radiusText;
     public TextMeshProUGUI rotationSpeedText;
     public TextMeshProUGUI orbitalSpeedText;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void ActivateScreen(Planet planet)
+    //Using overload to take both planet and star as parameters
     {
         Dictionary<string, float> allData = planet.ObjectData();
         FixedActivate(allData);
         rotationSpeedText.text = "Rotational Speed: " + allData["rotationSpeed"];
         orbitalSpeedText.text = "Orbital Speed: " + allData["orbitalSpeed"];
+        //Pulling data from the object to put it on the screen
     } 
 
     public void ActivateScreen(Star star)

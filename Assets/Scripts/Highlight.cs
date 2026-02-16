@@ -14,6 +14,7 @@ public class Highlight : MonoBehaviour
         outline.transform.localPosition = Vector3.zero;
         outline.transform.localRotation = Quaternion.identity;
         outline.transform.localScale = Vector3.one * 1.05f;
+        //Creating an outline that is around the object
 
         Material mat = new Material(Shader.Find("Standard"));
         mat.color = new Color(1f, 0.9f, 0f, 0.3f);
@@ -25,6 +26,7 @@ public class Highlight : MonoBehaviour
         mat.EnableKeyword("_ALPHABLEND_ON");
         mat.DisableKeyword("_ALPHAPREMULTIPLY_ON");
         mat.renderQueue = 3000;
+        //This material creater is a tone of yellow and slightly transparent
 
         MeshFilter meshFilter = GetComponent<MeshFilter>();
         Renderer meshRenderer = GetComponent<Renderer>();
@@ -35,6 +37,7 @@ public class Highlight : MonoBehaviour
         outlineMeshFilter.mesh = meshFilter.mesh;
 
         outlineRenderer.material = mat;
+        //Setting the material of the outline
 
         outline.SetActive(false);
     }
@@ -42,5 +45,6 @@ public class Highlight : MonoBehaviour
     public void SetOutline(bool state)
     {
         outline.SetActive(state);
+        //Opening the highlight
     }
 }

@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class CelestialBody
+public abstract class CelestialBody //Parent class for all objectd
 {
-    protected float mass;
+    protected float mass; //I want child classes to also access these variables
     protected float radius;
     protected GameObject gameObject;
     protected Rigidbody rb;
@@ -21,10 +21,10 @@ public abstract class CelestialBody
         rotationSpeed = bodySpeed;
         orbitalSpeed = moveSpeed;
 
-        rb = gameObject.GetComponent<Rigidbody>();
-        transform = gameObject.GetComponent<Transform>();
-        transform.localScale = Vector3.one * radius;
-        rb.velocity = body.transform.forward * orbitalSpeed;
+        rb = gameObject.GetComponent<Rigidbody>();//This is a class in UnityEngine library that is used for physics
+        transform = gameObject.GetComponent<Transform>();//This is a class in UnityEngine library that is for placement
+        transform.localScale = Vector3.one * radius;//Adjusting size according to radius
+        rb.velocity = body.transform.forward * orbitalSpeed;//Adjusting speed according to initial speed
     }
 
     public Vector3 CalculateForce(Vector3 otherPosition, float objMass)
@@ -34,11 +34,14 @@ public abstract class CelestialBody
         Vector3 normal = difference / distance;
 
         float forceMagnitude = (2f) * (objMass) * mass / (Mathf.Pow(distance, 2));
+        //I didn't use the exact G-constant because in reality these objects have massive distances between them
+        //and users wouldn't be able to traverse the simulation if I used those distance
         return normal * forceMagnitude;
     }
 
     public void RotateAmount(float timeDiff)
     {
+        //This is for objects having a rotation around themselves
         rotation += timeDiff * rotationSpeed;
         if (rotation >= 360f)
         {
@@ -49,6 +52,7 @@ public abstract class CelestialBody
 
     public Dictionary<string, float> ObjectData()
     {
+        //This for me to quickly acces the private information inside the class
         Dictionary<string, float> objectData = new Dictionary<string, float>();
         objectData.Add("mass", mass);
         objectData.Add("radius", radius);
@@ -59,6 +63,7 @@ public abstract class CelestialBody
 
     public void UpdateOrbital()
     {
+        //This is to update the speed of the objects as they change when new objects are added
         orbitalSpeed = rb.velocity.magnitude;
     }
 }
