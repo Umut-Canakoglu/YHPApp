@@ -11,7 +11,7 @@ public class Selections : MonoBehaviour
     public TextMeshProUGUI orbitalSpeedText;
 
     public void ActivateScreen(Planet planet)
-    //Using overload to take both planet and star as parameters
+    //Using overload to take different objects as parameters
     {
         Dictionary<string, float> allData = planet.ObjectData();
         FixedActivate(allData);
@@ -38,6 +38,7 @@ public class Selections : MonoBehaviour
 
     public void FixedActivate(Dictionary<string, float> entryData)
     {
+        //The change on mass and radius are applicable to every object.
         massText.text = "Mass: " + entryData["mass"];
         radiusText.text = "Radius: " + entryData["radius"];
     }
