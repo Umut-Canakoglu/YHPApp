@@ -29,15 +29,19 @@ public class AsteroidMovement : MonoBehaviour
     {
         if (collision.gameObject.tag == "Planet" || collision.gameObject.tag == "Star")
         {
+            //Explosions are simulated by using four parts: spark, rocks, flash, and fire
             foreach (ParticleSystem particle in explosionSystems)
             {
+                //Using a for loop to iterate through each particle system
                 ParticleSystem instantExp = Instantiate(particle, transform.position, Quaternion.identity);
                 ParticleSystem.ShapeModule pshape = instantExp.shape;
                 pshape.radius = radiusAsteroid * 0.5f;
                 instantExp.Play();
                 Destroy(instantExp, 1f);
+                //Destroying the particle effects after a certain time (1s)
             }
             Destroy(gameObject);
+            //Destroying the object after collision
         }
 
     }
