@@ -14,9 +14,9 @@ public class AsteroidMovement : MonoBehaviour
     void Start()
     {
         trailRenderer = GetComponent<TrailRenderer>();
-        asteroidObject = new Asteroid(gameObject, massAsteroid, radiusAsteroid * 0.1f, orbitAsteroid); //The trail is affected by the asteroid's size
+        asteroidObject = new Asteroid(gameObject, massAsteroid, radiusAsteroid * 0.1f, orbitAsteroid);
         //Creating an instance of the asteroid class
-        trailRenderer.widthMultiplier = radiusAsteroid * 0.15f;
+        trailRenderer.widthMultiplier = radiusAsteroid * 0.15f;//The trail is affected by the asteroid's size
     }
 
     // Update is called once per frame
