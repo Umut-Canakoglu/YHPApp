@@ -23,6 +23,13 @@ public class StarMovement : MonoBehaviour
             float objMass = planet.GetComponent<Rigidbody>().mass;
             planet.GetComponent<Rigidbody>().AddForce(starObject.CalculateForce(objPos, objMass));
         }
+        GameObject[] asteroids = GameObject.FindGameObjectsWithTag("Asteroid");
+        foreach (GameObject asteroid in asteroids)
+        {
+            Vector3 objPos = asteroid.transform.position;
+            float objMass = asteroid.GetComponent<Rigidbody>().mass * 0.5f;
+            asteroid.GetComponent<Rigidbody>().AddForce(starObject.CalculateForce(objPos, objMass));
+        }
         starObject.RotateAmount(Time.deltaTime);
     }
 }

@@ -8,8 +8,10 @@ public class AddObject : MonoBehaviour
     public GameObject selectionScreen;
     public GameObject setScreenPlanet;
     public GameObject setScreenStar;
+    public GameObject setScreenAsteroid;
     public GameObject planet;
     public GameObject star;
+    public GameObject asteroid;
     public float mass;
     public float radius;
     public float rotational;
@@ -21,12 +23,21 @@ public class AddObject : MonoBehaviour
     {
         setScreenPlanet.SetActive(true);
         setScreenStar.SetActive(false);
+        setScreenAsteroid.SetActive(false);
     }
 
     public void ActivateStarSet()
     {
         setScreenStar.SetActive(true);
         setScreenPlanet.SetActive(false);
+        setScreenAsteroid.SetActive(false);
+    }
+
+    public void ActivateAsteroidSet()
+    {
+        setScreenStar.SetActive(false);
+        setScreenPlanet.SetActive(false);
+        setScreenAsteroid.SetActive(true);
     }
 
     public void SetPlanet()
@@ -49,6 +60,16 @@ public class AddObject : MonoBehaviour
         starInst.GetComponent<StarMovement>().rotationStar = rotational;
         selectionScreen.SetActive(false);
         setScreenStar.SetActive(false);
+    }
+
+    public void SetAsteroid()
+    {
+        GameObject asteroidInst = Instantiate(asteroid, mousePos, transform.rotation);
+        asteroidInst.GetComponent<AsteroidMovement>().massAsteroid = mass;
+        asteroidInst.GetComponent<AsteroidMovement>().radiusAsteroid = radius;
+        asteroidInst.GetComponent<AsteroidMovement>().orbitAsteroid = orbital;
+        selectionScreen.SetActive(false);
+        setScreenAsteroid.SetActive(false);
     }
 
     public void SetMass(string s)
@@ -78,5 +99,6 @@ public class AddObject : MonoBehaviour
         selectionScreen.SetActive(false);
         setScreenPlanet.SetActive(false);
         setScreenStar.SetActive(false);
+        setScreenAsteroid.SetActive(false);
     }
 }

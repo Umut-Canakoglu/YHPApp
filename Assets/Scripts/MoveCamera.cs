@@ -38,12 +38,16 @@ public class MoveCamera : MonoBehaviour
         {
             if (looking)
             {
+                Time.timeScale = 1f;
                 Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;//This makes the cursor locked to the center
+                Cursor.lockState = CursorLockMode.None;
                 looking = false;
-            } else {
+            }
+            else
+            {
+                Time.timeScale = 0f;
                 Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.lockState = CursorLockMode.Locked;//This makes the cursor locked to the center
                 looking = true;
             }
         }
@@ -59,7 +63,9 @@ public class MoveCamera : MonoBehaviour
             pitch = Mathf.Clamp(pitch > 180 ? pitch - 360f : pitch, -lookYLimit, lookYLimit);
             float yaw = transform.localEulerAngles.y + rotationX;
             transform.localRotation = Quaternion.Euler(pitch, yaw, 0f);
-        } else {
+        }
+        else
+        {
             if (Input.GetMouseButtonDown(0))
             {
                 mousePosition = Input.mousePosition;
@@ -93,12 +99,20 @@ public class MoveCamera : MonoBehaviour
                             {
                                 Star starObj = selectedObject.GetComponent<StarMovement>().starObject;
                                 selectionScreen.GetComponent<Selections>().ActivateScreen(starObj);
-                            } else if (selectedObject.tag == "Planet")
+                            }
+                            else if (selectedObject.tag == "Planet")
                             {
                                 Planet planetObj = selectedObject.GetComponent<PlanetMovement>().planetObject;
                                 selectionScreen.GetComponent<Selections>().ActivateScreen(planetObj);
                             }
-                        } else {
+                            else if (selectedObject.tag == "Asteroid")
+                            {
+                                Asteroid asteroidObj = selectedObject.GetComponent<AsteroidMovement>().asteroidObject;
+                                selectionScreen.GetComponent<Selections>().ActivateScreen(asteroidObj);
+                            }
+                        }
+                        else
+                        {
                             selectedObject.GetComponent<Highlight>().SetOutline(false);
                             if (selectedObject != hit.transform.gameObject) //If the selected object is changed
                             {
@@ -108,19 +122,29 @@ public class MoveCamera : MonoBehaviour
                                 {
                                     Star starObj = selectedObject.GetComponent<StarMovement>().starObject;
                                     selectionScreen.GetComponent<Selections>().ActivateScreen(starObj);
-                                } else if (selectedObject.tag == "Planet")
+                                }
+                                else if (selectedObject.tag == "Planet")
                                 {
                                     Planet planetObj = selectedObject.GetComponent<PlanetMovement>().planetObject;
                                     selectionScreen.GetComponent<Selections>().ActivateScreen(planetObj);
-                                } 
-                            } else { //If an object is deselected
+                                }
+                                else if (selectedObject.tag == "Asteroid")
+                                {
+                                    Asteroid asteroidObj = selectedObject.GetComponent<AsteroidMovement>().asteroidObject;
+                                    selectionScreen.GetComponent<Selections>().ActivateScreen(asteroidObj);
+                                }
+                            }
+                            else
+                            { //If an object is deselected
                                 selected = false;
                                 selectedObject = null;
                                 selectionScreen.SetActive(false);
                             }
                         }
                     }
-                } else {
+                }
+                else
+                {
                     Ray ray = camera.ScreenPointToRay(Input.mousePosition);
                     Plane plane = new Plane(Vector3.up, selectedObject.transform.position);
                     //If an object is dragged around the new position is calculated by projecting the mouse's position onto a plane at the same level as the object
@@ -137,8 +161,8 @@ public class MoveCamera : MonoBehaviour
         Vector3 tempPos = transform.position;
         float leftRight = Input.GetAxisRaw("Horizontal");
         Vector3 moveVector = transform.right * leftRight;
-        float focusIn = Input.GetAxisRaw("Vertical");
-        Vector3 focusVector = focusIn * transform.forward;
+        float upDown = Input.GetAxisRaw("Vertical");
+        Vector3 focusVector = upDown * transform.up;
         Vector3 positionChange = focusVector * focusSpeed + moveVector * moveSpeed;
         transform.position = tempPos + positionChange;
 
@@ -154,7 +178,7 @@ public class MoveCamera : MonoBehaviour
         {
             placeObject.SetActive(true);
             Ray ray = camera.ScreenPointToRay(Input.mousePosition);
-            Plane plane = new Plane(Vector3.forward, Vector3.zero);
+            Plane plane = new Plane(Vector3.up, Vector3.zero);
             if (plane.Raycast(ray, out float distance))
             {
                 Vector3 point = ray.GetPoint(distance);

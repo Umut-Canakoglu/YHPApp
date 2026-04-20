@@ -18,7 +18,7 @@ public class Selections : MonoBehaviour
         rotationSpeedText.text = "Rotational Speed: " + allData["rotationSpeed"];
         orbitalSpeedText.text = "Orbital Speed: " + allData["orbitalSpeed"];
         //Pulling data from the object to put it on the screen
-    } 
+    }
 
     public void ActivateScreen(Star star)
     {
@@ -26,6 +26,14 @@ public class Selections : MonoBehaviour
         FixedActivate(allData);
         rotationSpeedText.text = "Rotational Speed: " + allData["rotationSpeed"];
         orbitalSpeedText.text = string.Empty;
+    }
+
+    public void ActivateScreen(Asteroid asteroid)
+    {
+        Dictionary<string, float> allData = asteroid.ObjectData();
+        FixedActivate(allData);
+        rotationSpeedText.text = "Orbital Speed: " + allData["orbitalSpeed"];
+        rotationSpeedText.text = string.Empty;
     }
 
     public void FixedActivate(Dictionary<string, float> entryData)
