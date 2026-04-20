@@ -75,6 +75,7 @@ public class PlanetMovement : MonoBehaviour
             {
                 Destroy(collision.gameObject);
             }
+            //Only the heavier planet explodes in collision
         }
     }
 
