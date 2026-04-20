@@ -38,14 +38,14 @@ public class MoveCamera : MonoBehaviour
         {
             if (looking)
             {
-                Time.timeScale = 1f;
+                Time.timeScale = 1f;//Time restarts for the simulation
                 Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
+                Cursor.lockState = CursorLockMode.None;//Cursor is visible and free to move again
                 looking = false;
             }
             else
             {
-                Time.timeScale = 0f;
+                Time.timeScale = 0f;//Time stops for the simulation
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;//This makes the cursor locked to the center
                 looking = true;
@@ -109,7 +109,7 @@ public class MoveCamera : MonoBehaviour
                             {
                                 Asteroid asteroidObj = selectedObject.GetComponent<AsteroidMovement>().asteroidObject;
                                 selectionScreen.GetComponent<Selections>().ActivateScreen(asteroidObj);
-                            }
+                            }//Openning the panel for a selected object
                         }
                         else
                         {
@@ -165,6 +165,7 @@ public class MoveCamera : MonoBehaviour
         Vector3 focusVector = upDown * transform.up;
         Vector3 positionChange = focusVector * focusSpeed + moveVector * moveSpeed;
         transform.position = tempPos + positionChange;
+        //Moving the camera around the scene using the arrow keys or WASD
 
         float zoom = Input.GetAxisRaw("Mouse ScrollWheel");
         float tempView = camera.orthographicSize;
@@ -174,14 +175,14 @@ public class MoveCamera : MonoBehaviour
         //Since this is an orthographic camera the size of the area makes items look closer
 
         if (Input.GetMouseButtonDown(1))
-        //Using right-click to place a new object
+        //Using right-click to place a new object at a specified location
         {
             placeObject.SetActive(true);
             Ray ray = camera.ScreenPointToRay(Input.mousePosition);
             Plane plane = new Plane(Vector3.up, Vector3.zero);
             if (plane.Raycast(ray, out float distance))
             {
-                Vector3 point = ray.GetPoint(distance);
+                Vector3 point = ray.GetPoint(distance);//Converting mouse position on the screen to position inside the game scene
                 placeObject.GetComponent<AddObject>().mousePos = point;
             }
         }
